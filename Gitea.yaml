@@ -1,0 +1,143 @@
+name: gitea
+services:
+  db:
+    cpu_shares: 90
+    command: []
+    deploy:
+      resources:
+        limits:
+          memory: 11739M
+    environment:
+      - POSTGRES_DB=gitea
+      - POSTGRES_PASSWORD=gitea
+      - POSTGRES_USER=gitea
+    image: postgres:14
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/icon.png
+    restart: always
+    volumes:
+      - type: bind
+        source: /home/yerassyl/gitea/postgres
+        target: /var/lib/postgresql/data
+        bind:
+          create_host_path: true
+    ports: []
+    devices: []
+    cap_add: []
+    networks:
+      - gitea
+    privileged: false
+    container_name: ""
+    hostname: ""
+  runner:
+    cpu_shares: 90
+    command: []
+    depends_on:
+      db:
+        condition: service_started
+        required: true
+      server:
+        condition: service_started
+        required: true
+    deploy:
+      resources:
+        limits:
+          memory: 11739M
+    environment:
+      - GITEA_INSTANCE_URL=https://gitea.zenstrix.org/
+      - GITEA_RUNNER_NAME=Gitea Runner
+      - GITEA_RUNNER_REGISTRATION_TOKEN=bM6phdgIyqI1jxDDdFBs3zAoakqa2qZfcnjwgG7X
+    image: gitea/act_runner:nightly
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/icon.png
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /home/yerassyl/gitea/runner
+        target: /data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        bind:
+          create_host_path: true
+    ports: []
+    devices: []
+    cap_add: []
+    networks:
+      - gitea
+    privileged: false
+    container_name: ""
+    hostname: ""
+  server:
+    cpu_shares: 90
+    command: []
+    container_name: gitea
+    depends_on:
+      db:
+        condition: service_started
+        required: true
+    deploy:
+      resources:
+        limits:
+          memory: 11739M
+    environment:
+      - GITEA__database__DB_TYPE=postgres
+      - GITEA__database__HOST=db:5432
+      - GITEA__database__NAME=gitea
+      - GITEA__database__PASSWD=gitea
+      - GITEA__database__USER=gitea
+      - USER_GID=1000
+      - USER_UID=1000
+    hostname: gitea
+    image: gitea/gitea:1.22.4
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/icon.png
+    ports:
+      - mode: ingress
+        target: 3000
+        published: "3000"
+        protocol: tcp
+      - mode: ingress
+        target: 22
+        published: "222"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: bind
+        source: /home/yerassyl/gitea/gitea
+        target: /data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /etc/timezone
+        target: /etc/timezone
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+        bind:
+          create_host_path: true
+    devices: []
+    cap_add: []
+    networks:
+      - gitea
+    privileged: false
+networks:
+  gitea:
+    name: gitea_gitea
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/icon.png
+  index: /
+  is_uncontrolled: true
+  port_map: ""
+  scheme: http
+  title:
+    custom: Gitea

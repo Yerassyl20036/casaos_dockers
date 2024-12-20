@@ -1,0 +1,40 @@
+name: resilient_link
+services:
+  main_app:
+    cpu_shares: 10
+    command: []
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    environment:
+      - CLOUDFLARE_API_TOKEN=UwvXyXDGvZyCfqB-jziXPr1f1bTOlb79swSvCUZZ
+      - DOMAINS=zenstrix.org, gitea.zenstrix.org, casaos.zenstrix.org,
+        terminal.zenstrix.org, nginx.zenstrix.org, kuma.zenstrix.org,
+        myspeed.zenstrix.org, jetkins.zenstrix.org, minecraft.zenstrix.org
+      - IP6_PROVIDER=none
+      - PROXIED=true
+    image: favonia/cloudflare-ddns:latest
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cloudflared/icon.png
+    restart: unless-stopped
+    ports: []
+    volumes: []
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+    container_name: ""
+    hostname: ""
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cloudflared/icon.png
+  index: /
+  is_uncontrolled: false
+  port_map: ""
+  scheme: http
+  store_app_id: resilient_link
+  title:
+    custom: cloudflare-ddns
