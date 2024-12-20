@@ -1,0 +1,87 @@
+name: jenkins
+services:
+  jenkins:
+    cpu_shares: 50
+    container_name: Jenkins
+    hostname: Jenkins
+    image: jenkins/jenkins:lts-jdk17
+    labels:
+      icon: https://icon.casaos.io/main/all/jenkins.png
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    restart: always
+    user: root
+    volumes:
+      - type: bind
+        source: /DATA/AppData/Jenkins/data
+        target: /data
+      - type: bind
+        source: /var/lib/docker/volumes/b098c98b2c5dec792246dc33375853c05958ace7c144f4aa157326a6f6c0de4c/_data
+        target: /var/jenkins_home
+    devices: []
+    cap_add: []
+    command: []
+    environment: []
+    network_mode: bridge
+    privileged: false
+    deploy:
+      resources:
+        limits:
+          memory: 11741M
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  author: bepp-boop
+  category: Network
+  description:
+    de: Ein Server zum Erstellen von Pipelines für Jenkins kontinuierliche
+      Integration und Bereitstellung.
+    en_us: A server for creating pipelines for Jenkins continuous integration and
+      delivery.
+    es_es: Un servidor para crear canalizaciones para la integración y entrega
+      continua de Jenkins.
+    fr_fr: Un serveur pour créer des pipelines pour l'intégration et la livraison
+      continues de Jenkins.
+    hu_hu: Szerver Jenkins folyamatos integrációs és szállítási folyamatok
+      létrehozásához.
+    it_it: Un server per creare pipeline per l'integrazione continua e la
+      distribuzione di Jenkins.
+    pl_pl: Serwer do tworzenia potoków dla ciągłej integracji i dostarczania Jenkins.
+    pt_br: Um servidor para criar pipelines para integração e entrega contínua do
+      Jenkins.
+    ru_ru: Сервер для создания конвейеров непрерывной интеграции и доставки Jenkins.
+    sv_se: En server för att skapa pipelines för Jenkins kontinuerliga integration
+      och leverans.
+    uk_ua: Сервер для створення конвеєрів безперервної інтеграції та доставки Jenkins.
+    zh_cn: 用于创建 Jenkins 持续集成和交付管道的服务器。
+  developer: bepp-boop
+  icon: https://icon.casaos.io/main/all/jenkins.png
+  is_uncontrolled: false
+  main: jenkins
+  port_map: "8080"
+  store_app_id: jenkins
+  tagline:
+    de_de: Jenkins Server für kontinuierliche Integration und Bereitstellung.
+    en_us: Jenkins Continuous Integration and Delivery server.
+    es_es: Servidor de Integración Continua y Entrega de Jenkins.
+    fr_fr: Serveur d'Intégration Continue et de Livraison Jenkins.
+    hu_hu: Jenkins folyamatos integrációs és szállítási szerver.
+    it_it: Server Jenkins per Integrazione Continua e Distribuzione.
+    pl_pl: Serwer ciągłej integracji i dostarczania Jenkins.
+    pt_br: Servidor de Integração Contínua e Entrega Jenkins.
+    ru_ru: Сервер непрерывной интеграции и доставки Jenkins.
+    sv_se: Jenkins server för kontinuerlig integration och leverans.
+    uk_ua: Сервер безперервної інтеграції та доставки Jenkins.
+    zh_cn: Jenkins 持续集成和交付服务器。
+  tips:
+    before_install:
+      en_us: ""
+  title:
+    en_us: Jenkins CI/CD
+    custom: ""
+  hostname: ""
+  scheme: http
+  index: /
