@@ -8,7 +8,7 @@ services:
         limits:
           memory: 256M
     environment:
-      - CLOUDFLARE_API_TOKEN=UwvXyXDGvZyCfqB-jziXPr1f1bTOlb79swSvCUZZ
+      - CLOUDFLARE_API_TOKEN=
       - DOMAINS=zenstrix.org, gitea.zenstrix.org, casaos.zenstrix.org,
         terminal.zenstrix.org, nginx.zenstrix.org, kuma.zenstrix.org,
         myspeed.zenstrix.org, jetkins.zenstrix.org, minecraft.zenstrix.org
